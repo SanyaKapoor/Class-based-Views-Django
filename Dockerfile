@@ -1,8 +1,7 @@
-FROM python:3
-ENV PYTHONUNBUFFERED=1
-ADD . /usr/src/app
-WORKDIR /usr/src/app
-COPY requirements.txt ./
-RUN pip install --no-cache-dir -r requirements.txt
-EXPOSE 8000
-CMD exec gunicorn djangoapp.wsgi:application --bind 0.0.0.0:8000 --workers 3
+FROM python:3.8
+COPY . .
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+RUN pip install --upgrade pip
+RUN pip install -r requirements.txt
+CMD [ "python", "./hello_django/manage.py", "runserver", "0.0.0.0:8000" ]
